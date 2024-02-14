@@ -1,7 +1,4 @@
-#include include/main.h
-t_date_exc	date_exc;
-t_data		data;
-
+#include "include/main.h"
 // Date start DD/MM/YYYY // Number of date wanted N // Day wanted LU/MA/ME/JE/VE/SA/DI // Vacation date (DD/MM/YYYY-DD/MM/YYYY)// Extra excluded date DD/MM/YYYY //
 
 
@@ -97,6 +94,15 @@ bool is_valid_date(str)
 	return (0);
 }
 
+// Actually get start date and fill date with it
+void fill_date(char *str, t_data *data)
+{
+	data->day = get_day(str);
+	data->mounth = get_mounth(str);
+	data->year = get_year(str);
+}
+
+// Get start date, verify if start date is valid and fill start date in data
 bool get_date(t_data *data)
 {
 	char *str;
@@ -105,13 +111,16 @@ bool get_date(t_data *data)
 	while (*str != 0)
 	{
 		if (!is_valid_date(str))
-			get_date(str, data);
+		{
+			fill_date(str, data);
+			return (0);
+		}
+		str = readline("Day start \"DD/MM/YYYY\":");
 	}
-	
-	return (0);
+	return (1);
 }
 // Ask and fill data if not from argv
-ask_and_fill_data(t_data *data)
+int ask_and_fill_data(t_data *data)
 {
 // Date start DD/MM/YYYY // Number of date wanted N // Day wanted LU/MA/ME/JE/VE/SA/DI // Vacation date (DD/MM/YYYY-DD/MM/YYYY)// Extra excluded date DD/MM/YYYY //
 
@@ -120,13 +129,13 @@ ask_and_fill_data(t_data *data)
 
 	if(get_date(data))
 		return (1);
-	if(number_of_day(data))
-		return (1);
-	if(day_needed(data))
-		return (1);
-	if(vacation_date(data))
-		return (1);
-	if (extra_exc_date(data))
-		return (1);
+	// if(number_of_day(data))
+	// 	return (1);
+	// if(day_needed(data))
+	// 	return (1);
+	// if(vacation_date(data))
+	// 	return (1);
+	// if (extra_exc_date(data))
+	// 	return (1);
 	return (0);
 }
