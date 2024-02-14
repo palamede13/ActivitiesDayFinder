@@ -19,7 +19,7 @@ bool check_str_nb_char(int n, char *str)
 // Is this char a number?
 bool is_num(char c)
 {
-	if (c < 47 && c > 58)
+	if (c < 48 || c > 57)
 		return (0);
 	return (1);
 }
@@ -27,7 +27,6 @@ bool is_num(char c)
 // Parse date / is str on format DD/MM/YYYY
 bool pars_date(char *str)
 {
-	int i = 0;
 	if (check_str_nb_char(9, str))
 		return (1);
 	if (!(is_num(*str) && is_num(*(str + 1)) && (*(str + 2) == '/') && is_num(*(str + 3)) && is_num(*(str + 4)) && (*(str + 5) == '/') && is_num(*(str + 6)) && is_num(*(str + 7)) && is_num(*(str + 8)) && is_num(*(str + 9))))
@@ -36,7 +35,7 @@ bool pars_date(char *str)
 }
 
 // get day/mounth/year from format DD/MM/YYYY
-int get_day(char *str)
+int ft_get_day(char *str)
 {
 	int day = 0;
 
@@ -47,25 +46,25 @@ int get_day(char *str)
 	return (day);
 }
 
-int get_mounth(char *str)
+int ft_get_mounth(char *str)
 {
 	int mounth = 0;
 
 	if (pars_date(str))
 		return (1);
-	str + 3;
+	str += 3;
 	mounth = (*(str) - 48) * 10;
 	mounth += (*(str + 1) - 48);
 	return (mounth);
 }
 
-int get_year(char *str)
+int ft_get_year(char *str)
 {
 	int year = 0;
 
 	if (pars_date(str))
 		return (1);
-	str + 6;
+	str += 6;
 	year = (*(str) - 48) * 1000;
 	year += (*(str + 1) - 48) * 100;
 	year += (*(str + 2) - 48) * 10;
@@ -74,14 +73,14 @@ int get_year(char *str)
 }
 
 // Is str on format DD/MM/YYYY and a valid date
-bool is_valid_date(str)
+bool is_valid_date(char *str)
 {
 	if (pars_date(str))
 		return (1);
 
-	int day = get_day(str);
-	int mounth = get_mounth(str);
-	int year = get_year(str);
+	int day = ft_get_day(str);
+	int mounth = ft_get_mounth(str);
+	int year = ft_get_year(str);
 
 	if (day < 1 || day > 31)
 		return (1);
@@ -97,9 +96,9 @@ bool is_valid_date(str)
 // Actually get start date and fill date with it
 void fill_date(char *str, t_data *data)
 {
-	data->day = get_day(str);
-	data->mounth = get_mounth(str);
-	data->year = get_year(str);
+	data->StartDay = ft_get_day(str);
+	data->StartMounth = ft_get_mounth(str);
+	data->StartYear = ft_get_year(str);
 }
 
 // Get start date, verify if start date is valid and fill start date in data

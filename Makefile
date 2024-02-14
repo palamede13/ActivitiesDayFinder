@@ -1,5 +1,5 @@
 NAME = ActivitiesDayFinder
-GCCF = gcc -Wall -Werror -Wextra #-g3 -fsanitize=address
+GCCF = gcc -Wall -Werror -Wextra #-fsanitize=address -g3
 GREEN       = \033[32m
 RED         = \033[31m
 DEFAULT     = \033[37m
@@ -10,7 +10,7 @@ DEP = Makefile src/$(INCLUDE_PATH)/main.h
 SRC =   main.c					\
 		debug_ft.c				\
 		pars_and_fill_data.c
-HEAD = -I ./src/$(INCLUDE_PATH)/ -I
+HEAD = -I ./src/$(INCLUDE_PATH)/
 OBJ = $(patsubst %.c,$(PATHOBJ)/%.o,$(SRC))
 ECHO = echo
 
@@ -21,7 +21,7 @@ $(PATHOBJ):
 
 $(NAME): $(PATHOBJ) $(addprefix $(PATHSRC)/,$(SRC)) $(OBJ)
 	@$(ECHO) "\r$(GREEN) The .o from $(NAME) are compiled.$(DEFAULT)"
-	@$(GCCF) $(OBJ) $(LIBFT) -o $(NAME)
+	@$(GCCF) $(OBJ) -lncurses -lreadline -o $(NAME)
 	@$(ECHO) "$(GREEN)$(NAME)$(DEFAULT) created."
 
 $(PATHOBJ)/%.o: $(PATHSRC)/%.c $(DEP)
@@ -30,14 +30,12 @@ $(PATHOBJ)/%.o: $(PATHSRC)/%.c $(DEP)
 
 clean:
 	@$(ECHO) "All $(RED).o$(DEFAULT) are now deleted for $(NAME)."
-	@make clean -C ./libft/
 	@rm -rf $(PATHOBJ)
 
 fclean: clean
 	@$(ECHO) "$(RED)$(NAME)$(DEFAULT) is now deleted."
-	@make fclean -C ./libft/
 	@rm -rf $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re 
