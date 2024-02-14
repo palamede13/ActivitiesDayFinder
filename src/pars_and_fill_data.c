@@ -118,18 +118,22 @@ bool get_date(t_data *data)
 	}
 	return (1);
 }
+
+// Ask and fill data with number of the day
+bool number_of_day(t_data *data)
+{
+	
+}
+
 // Ask and fill data if not from argv
 int ask_and_fill_data(t_data *data)
 {
 // Date start DD/MM/YYYY // Number of date wanted N // Day wanted LU/MA/ME/JE/VE/SA/DI // Vacation date (DD/MM/YYYY-DD/MM/YYYY)// Extra excluded date DD/MM/YYYY //
 
-	// char *prompt;
-	// prompt = readline("")
-
 	if(get_date(data))
 		return (1);
-	// if(number_of_day(data))
-	// 	return (1);
+	if(number_of_day(data))
+		return (1);
 	// if(day_needed(data))
 	// 	return (1);
 	// if(vacation_date(data))
