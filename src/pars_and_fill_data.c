@@ -127,7 +127,7 @@ void fill_date(char *str, t_data *data)
 }
 
 // Get start date, verify if start date is valid and fill start date in data
-bool get_date(t_data *data)
+bool get_start_date(t_data *data)
 {
 	char *str;
 
@@ -209,7 +209,7 @@ bool is_valid_day_needed_and_fill(char *str, t_data *data)
 		return (1);
 	if (check_format_CCslashCC(str))
 		return (1);
-	while(str[i] && str[i + 1] && str[i + 2])
+	while(str[i] && str[i + 1])
 	{
 		if (str[i] == 'L' && str[i + 1] == 'U')
 		{
@@ -274,16 +274,42 @@ bool day_needed(t_data *data)
 	return (1);
 }
 
+bool vacation_date_check_and_fill(char *str, t_data *data)
+{
+	
+}
+
+// Ask check and fill vacation date
+bool get_vacation_dates(t_data *data)
+{
+	char *str;
+
+	str = readline("Vacations date (one by one) \"DD/MM/YYYY-DD/MM/YYYY\" (f to end this part):");
+	while (*str != 'f')
+	{
+		if (vacation_date_check_and_fill(str, data))
+		{
+
+			printf("Vacations date done, next one?")
+		}
+		else
+			printf("Wrong format, please try again");
+		str = readline("Vacations date (one by one) \"DD/MM/YYYY-DD/MM/YYYY\" (f to end this part) :");
+	}
+	return (0);
+}
 // Ask and fill data if not from argv
 int ask_and_fill_data(t_data *data)
 {
 // Date start DD/MM/YYYY // Number of date wanted N // Day wanted LU/MA/ME/JE/VE/SA/DI // Vacation date (DD/MM/YYYY-DD/MM/YYYY)// Extra excluded date DD/MM/YYYY //
 
-	// if(get_date(data))
+	// if(get_start_date(data))
 		// return (1);
 	// if(number_of_day(data))
 	// 	return (1);
-	if(day_needed(data))
+	// if(day_needed(data))
+	// 	return (1);
+	if (get_vacation_dates(data))
 		return (1);
 	// if(vacation_date(data))
 	// 	return (1);

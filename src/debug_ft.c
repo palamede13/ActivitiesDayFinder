@@ -13,9 +13,9 @@ void print_number_of_days(t_data *data)
 void print_day_needed(t_data *data)
 {
 	int nb = data->day_needed;
+	printf("VALUE : %d\n", data->day_needed);
 	while(nb > 0)
 	{
-		printf("VALUE : %d\n", data->day_needed);
 		if (nb % 2 == 1)
 		{
 			printf("LUNDI");

@@ -23,5 +23,5 @@ int main(int argc, char **argv)
 	// DEBUG PART
 	// print_start_day(&data);
 	// print_number_of_days(&data);
-	print_day_needed(&data);
+	// print_day_needed(&data);
 }

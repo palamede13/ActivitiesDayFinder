@@ -9,7 +9,11 @@
 
 typedef struct s_date_exc
 {
-	int i;
+	int day;
+	int mounth;
+	int year;
+
+	t_date_exc *next;
 }	t_date_exc;
 
 typedef struct s_data
@@ -21,7 +25,7 @@ typedef struct s_data
 	// bit wise here : 01111111 : 1 = LU / 2 = MA / 4 = ME / 8 = JE / 16 = VE / 32 = SA / 64 = DI 
 	char day_needed;
 
-	t_date_exc dateExc;
+	t_date_exc first;
 }	t_data;
 
 // DEBUG FT
