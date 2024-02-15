@@ -274,9 +274,37 @@ bool day_needed(t_data *data)
 	return (1);
 }
 
+//check vacation date (DD/MM/YYYY-DD/MM/YYYY)
+bool check_vacation_date_format(char *str)
+{
+
+}
+
+// Get vacation date from string to struct (day mounth year)
+void	get_vacation_date(char *str, char *start, char *end)
+{
+
+}
+
+//
+bool check_vacation_dates_date(char *str, char *start, char *end)
+{
+
+}
+
+// check and fill vacation date
 bool vacation_date_check_and_fill(char *str, t_data *data)
 {
-	
+	char *start;
+	char *end;
+
+	if (check_vacation_date_format(str))
+		return (1);
+	get_vacation_date(str, start, end)
+	if (check_vacation_dates_date(str, start, end))
+		return (1);
+	add_vacation_date_to_date_exc(str, start, end);
+	return (0);
 }
 
 // Ask check and fill vacation date
@@ -287,7 +315,7 @@ bool get_vacation_dates(t_data *data)
 	str = readline("Vacations date (one by one) \"DD/MM/YYYY-DD/MM/YYYY\" (f to end this part):");
 	while (*str != 'f')
 	{
-		if (vacation_date_check_and_fill(str, data))
+		if (!vacation_date_check_and_fill(str, data))
 		{
 
 			printf("Vacations date done, next one?")
