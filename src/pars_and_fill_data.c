@@ -1,6 +1,31 @@
 #include "include/main.h"
 // Date start DD/MM/YYYY // Number of date wanted N // Day wanted LU/MA/ME/JE/VE/SA/DI // Vacation date (DD/MM/YYYY-DD/MM/YYYY)// Extra excluded date DD/MM/YYYY //
+int	ft_atoi(const char *str)
+{
+	int		signe;
+	long	nb;
+	long	a;
 
+	a = 0;
+	signe = 1;
+	while (*str == ' ' || *str == '\n' || *str == '\t'
+		|| *str == '\v' || *str == '\f' || *str == '\r')
+		str++;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+		{
+			signe *= -1;
+		}
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		a = a * 10 + (*str - '0');
+		str++;
+	}
+	return (nb = signe * a);
+}
 
 bool check_str_nb_char(int n, char *str)
 {
@@ -119,10 +144,134 @@ bool get_date(t_data *data)
 	return (1);
 }
 
+// Verify if its only numbers
+bool str_is_num(char* str)
+{
+	int i = 0;
+	if (!str)
+		return (1);
+	while(str[i])
+	{
+		if (!is_num(str[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+// Fill nb of days in data
+void	fill_nb_of_days(char *str, t_data *data)
+{
+	data->number_of_days = ft_atoi(str);
+}
+
 // Ask and fill data with number of the day
 bool number_of_day(t_data *data)
 {
-	
+	char *str;
+
+	str = readline("Number of day wanted :");
+	while (*str != 0)
+	{
+		if (!str_is_num(str))
+		{
+			fill_nb_of_days(str, data);
+			return (0);
+		}
+		str = readline("Number of day wanted :");
+	}
+	return (1);
+}
+
+// check format CHARCHAR/CHARCHAR/CHARCHAR....
+bool check_format_CCslashCC(char *str)
+{
+	int i = 0;
+	if (!str)
+		return (1);
+	while (str[i])
+	{
+		i++;
+		if ((((i % 3) == 0) && str[i-1] != '/') || ((i % 3) && (str[i-1] < 'A' || str[i-1] > 'Z')))
+			return (1);
+	}
+	if (i > 20 || (i % 3) != 2)
+		return (1);
+	return (0);
+}
+
+// check and fill days needed
+bool is_valid_day_needed_and_fill(char *str, t_data *data)
+{
+	int i = 0;
+
+	if (!str)
+		return (1);
+	if (check_format_CCslashCC(str))
+		return (1);
+	while(str[i] && str[i + 1] && str[i + 2])
+	{
+		if (str[i] == 'L' && str[i + 1] == 'U')
+		{
+			if (data->day_needed % 2)
+				return (1);
+			data->day_needed += 1;
+		}
+		if (str[i] == 'M' && str[i + 1] == 'A')
+		{
+			if (data->day_needed % 4 == 2)
+				return (1);
+			data->day_needed += 2;
+		}
+		if (str[i] == 'M' && str[i + 1] == 'E')
+		{
+			if (data->day_needed % 8 == 4)
+				return (1);
+			data->day_needed += 4;
+		}
+		if (str[i] == 'J' && str[i + 1] == 'E')
+		{
+			if (data->day_needed % 16 == 8)
+				return (1);
+			data->day_needed += 8;
+		}
+		if (str[i] == 'V' && str[i + 1] == 'E')
+		{
+			if (data->day_needed % 32 == 16)
+				return (1);
+			data->day_needed += 16;
+		}
+		if (str[i] == 'S' && str[i + 1] == 'A')
+		{
+			if (data->day_needed % 64 == 32)
+				return (1);
+			data->day_needed += 32;
+		}
+		if (str[i] == 'D' && str[i + 1] == 'I')
+		{
+			if (data->day_needed % 128 == 64)
+				return (1);
+			data->day_needed += 64;
+		}
+		i += 3;
+	}
+	return (0);
+}
+
+// Ask and fill days needed
+bool day_needed(t_data *data)
+{
+	char *str;
+
+	str = readline("Day needed \"LU/MA/ME/JE/VE/SA/DI\" :");
+	while (*str != 0)
+	{
+		if (!is_valid_day_needed_and_fill(str, data))
+			return (0);
+		data->day_needed = 0;
+		str = readline("Wrong input, please take care of the format. Day needed \"LU/MA/ME/JE/VE/SA/DI\" :");
+	}
+	return (1);
 }
 
 // Ask and fill data if not from argv
@@ -130,12 +279,12 @@ int ask_and_fill_data(t_data *data)
 {
 // Date start DD/MM/YYYY // Number of date wanted N // Day wanted LU/MA/ME/JE/VE/SA/DI // Vacation date (DD/MM/YYYY-DD/MM/YYYY)// Extra excluded date DD/MM/YYYY //
 
-	if(get_date(data))
-		return (1);
-	if(number_of_day(data))
-		return (1);
-	// if(day_needed(data))
+	// if(get_date(data))
+		// return (1);
+	// if(number_of_day(data))
 	// 	return (1);
+	if(day_needed(data))
+		return (1);
 	// if(vacation_date(data))
 	// 	return (1);
 	// if (extra_exc_date(data))

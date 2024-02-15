@@ -17,14 +17,22 @@ typedef struct s_data
 	int StartDay;
 	int StartMounth;
 	int StartYear;
+	int	number_of_days;
+	// bit wise here : 01111111 : 1 = LU / 2 = MA / 4 = ME / 8 = JE / 16 = VE / 32 = SA / 64 = DI 
+	char day_needed;
 
 	t_date_exc dateExc;
 }	t_data;
 
+// DEBUG FT
 void	print_start_day(t_data *data);
+void	print_number_of_days(t_data *data);
+void	print_day_needed(t_data *data);
 
+// PARS AND FILL FT
 int		ask_and_fill_data(t_data *data);
 
+// READLINE ????
 char	*readline(const char *prompt);
 
 #endif
