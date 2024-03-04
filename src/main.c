@@ -7,6 +7,13 @@ void init(t_data *data)
 	data->StartYear = 0;
 	data->number_of_days = 0;
 	data->day_needed = 0;
+	data->first = 0;
+}
+
+int f_clear(t_data *data)
+{
+	lst_clean(data->first);
+	return (1);
 }
 
 int main(int argc, char **argv)
@@ -17,7 +24,7 @@ int main(int argc, char **argv)
 	// Date start DD/MM/YYYY // Number of date wanted N // Day wanted LU/MA/ME/JE/VE/SA/DI // Vacation date (DD/MM/YYYY-DD/MM/YYYY)// Extra excluded date DD/MM/YYYY //
 	init(&data);
 	if(ask_and_fill_data(&data))
-		return (0);
+		return (f_clear(data));
 	
 	
 	// DEBUG PART

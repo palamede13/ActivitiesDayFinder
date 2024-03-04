@@ -275,35 +275,64 @@ bool day_needed(t_data *data)
 }
 
 //check vacation date (DD/MM/YYYY-DD/MM/YYYY)
-bool check_vacation_date_format(char *str)
+bool check_vacation_date_format_and_date(char *str)
 {
+	int i = 0;
 
+	while (str[i])
+		i++;
+	if (i != 21)
+		return (1);
+	if (str[10] != '-')
+		return (1);
+	str[10] = 0;
+	if (pars_date(str) | pars_date(str + 11))
+		return (1);
+	if (is_valid_date(str) && is_valid_date(str + 11))
+		return (1);
+	return (0);
 }
 
 // Get vacation date from string to struct (day mounth year)
-void	get_vacation_date(char *str, char *start, char *end)
+void	add_vacation_date_to_date_exc(t_data *data, char *str)
 {
+	char *start = str;
+	char *end = str + 11;
+	int day_start = ft_get_day(str);
+	int mounth_start = ft_get_mounth(str);
+	int year_start = ft_get_year(str);
+	int day_end = ft_get_day(str);
+	int mounth_end = ft_get_mounth(str);
+	int year_end = ft_get_year(str);
 
-}
+	t_date_exc *new = malloc(sizeof(t_date_exc));
+	t_date_exc *last;
 
-//
-bool check_vacation_dates_date(char *str, char *start, char *end)
-{
-
+	if (data->first)
+	{
+		last = lst_last(data->first);
+		fill_from_start_to_end_date_exc(last, str)
+		last->next = new;
+	}
+	else
+	{
+		data->first = new;
+		fill_from_start_to_end_date_exc(last, str)
+	}
+	new->day = ft_get_day(str);
+	new->mounth = ft_get_mounth(str);
+	new->year = ft_get_year(str);
 }
 
 // check and fill vacation date
 bool vacation_date_check_and_fill(char *str, t_data *data)
 {
-	char *start;
-	char *end;
+	char start[10];
+	char end[10];
 
-	if (check_vacation_date_format(str))
+	if (check_vacation_date_format_and_date(str))
 		return (1);
-	get_vacation_date(str, start, end)
-	if (check_vacation_dates_date(str, start, end))
-		return (1);
-	add_vacation_date_to_date_exc(str, start, end);
+	add_vacation_date_to_date_exc(data, str);
 	return (0);
 }
 

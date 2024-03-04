@@ -25,7 +25,7 @@ typedef struct s_data
 	// bit wise here : 01111111 : 1 = LU / 2 = MA / 4 = ME / 8 = JE / 16 = VE / 32 = SA / 64 = DI 
 	char day_needed;
 
-	t_date_exc first;
+	t_date_exc *first;
 }	t_data;
 
 // DEBUG FT

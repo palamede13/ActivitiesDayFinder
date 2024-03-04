@@ -66,3 +66,13 @@ void print_day_needed(t_data *data)
 	}
 	printf("\n");
 }
+
+void print_date_excluded(t_date_exc *first)
+{
+	printf("Days exluded :\n");
+	while (first)
+	{
+		printf("%d/%d/%d excluded\n", first->day, first->mounth, first->year);
+		first = first->next;
+	}
+}
