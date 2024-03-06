@@ -290,7 +290,19 @@ bool check_vacation_date_format_and_date(char *str)
 		return (1);
 	if (is_valid_date(str) && is_valid_date(str + 11))
 		return (1);
+	if (ft_get_year(str) > ft_get_year(str + 11))
+		return (1);
+	if (ft_get_mounth(str) > ft_get_mounth(str + 11))
+		return (1);
+	if (ft_get_day(str) > ft_get_day(str + 11))
+		return (1);
 	return (0);
+}
+
+// Get the day right before to sort excluded days
+t_date_exc *get_day_exc_right_before(t_date_exc *first)
+{
+	
 }
 
 // Get vacation date from string to struct (day mounth year)
@@ -298,18 +310,44 @@ void	add_vacation_date_to_date_exc(t_data *data, char *str)
 {
 	char *start = str;
 	char *end = str + 11;
+	str + 10 = 0;
 	int day_start = ft_get_day(str);
 	int mounth_start = ft_get_mounth(str);
 	int year_start = ft_get_year(str);
-	int day_end = ft_get_day(str);
-	int mounth_end = ft_get_mounth(str);
-	int year_end = ft_get_year(str);
+	int day_end = ft_get_day(end);
+	int mounth_end = ft_get_mounth(end);
+	int year_end = ft_get_year(end);
 
-	t_date_exc *new = malloc(sizeof(t_date_exc));
-	t_date_exc *last;
+	t_date_exc *current = get_day_exc_right_before(data->first);
+
+
 
 	if (data->first)
 	{
+		while (current->year < year_start)
+			current = current->next;
+		while (current->mounth < mounth_start)
+			current = current->next;
+		while (current->day < day_start)
+			current = current->next;
+		while (year_start < year_end)
+		{
+			while ((mounth_start < mounth_end) || (year_start != year_end))
+			{
+				while ((day_start < day_end) || (mounth_start != mounth_end))
+				{
+					if ()
+				}
+				if (mounth_start < 12)
+					mounth_start++;
+				else
+				{
+					mounth_start = 1;
+					year_start++;
+				}
+			}
+
+		}
 		last = lst_last(data->first);
 		fill_from_start_to_end_date_exc(last, str)
 		last->next = new;

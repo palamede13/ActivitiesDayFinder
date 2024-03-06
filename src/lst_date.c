@@ -24,3 +24,11 @@ t_date_exc lst_last(t_date_exc first)
 	return (first);
 }
 
+t_date_exc lst_new(int day, int mounth, int year)
+{
+	t_date_exc *new = malloc(sizeof(t_date_exc))
+	new->day = day;
+	new->mounth = mounth;
+	new-> year = year;
+	return (new);
+}
